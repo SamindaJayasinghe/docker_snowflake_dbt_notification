@@ -14,9 +14,9 @@ Search for "Incoming Webhooks" and add it to your workspace.
 Create a webhook and copy the webhook URL that Slack generates for you.
 
 
-======================================================================================================
+=====================================
 1st Approach. Send Slack notifications without running the DBT project 
-===================================================================================================== 
+
 
 in the terminal type "python slack.py" and it will send missing columns in the source table
 
@@ -34,9 +34,9 @@ every table has to be configured on a macro
 if you want to check all the tables, you have to configure them separately
 
 
-======================================================================================================
+=====================================
 2nd Approach. Send Slack notifications after dbt run 
-===================================================================================================== 
+
 How this works
 
 First we create a table to capture missing columns (Note - this table will not grow, meaning every run it will drop and re-create ) 
@@ -53,12 +53,9 @@ While its building the model, this will capture any missing values,
 
 Then after dbt complete, it shows all the missing values with table name and field. 
 
-======================================================================================================
-How to correct dbt after detecting the missing columns
-===================================================================================================== 
+=====================================
+what next : How to correct dbt after detecting the missing columns
 
-After Receiving the message whats the next step to correct 
-—-----------------------------------------------------
 message will show you what model to look in the dbt, just add the column to the column_list
 
 And add the fields in the appropriate model 
@@ -66,9 +63,8 @@ And add the fields in the appropriate model
 
 And re-run the project 
 
-======================================================================================================
-Additional finding --> How build dbt models in python. ( without jinja ) 
-===================================================================================================== 
-Pls review change_tracking_py 
+=====================================
+Additional finding :  How build dbt models in python. ( without jinja ) 
 
+Pls review change_tracking_py 
 to execute dbt run --profiles-dir . --models change_tracking_py
