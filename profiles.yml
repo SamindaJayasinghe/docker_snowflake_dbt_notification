@@ -1,0 +1,16 @@
+default:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: gm04346.ap-south-1
+      user: SAMINDA
+      password: Need4Speed
+      role: ACCOUNTADMIN
+      database: TEST
+      warehouse: COMPUTE_WH
+      schema: DBT_OUTPUT
+      threads: 1
+      client_session_keep_alive: False
+      query_tag: snow1
+  slack_api_token: your_slack_api_token
