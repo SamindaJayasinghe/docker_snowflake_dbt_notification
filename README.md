@@ -1,4 +1,5 @@
-**docker build **
+```diff
+!**docker build **
 
 open docker desktop --> download this repo--> open it in vscode --> install docker extension > right click on docker file --> click build image --> click on docker icon --> check under images and right click and "run intractive"
 this will build the docker container --> right click on it --> and click "attach visual studio code" --> this will open a separate window.
@@ -15,9 +16,8 @@ Search for "Incoming Webhooks" and add it to your workspace.
 Create a webhook and copy the webhook URL that Slack generates for you.
 
 
-=====================================
 1st Approach. 
-**Send Slack notifications without running the DBT project** 
+!**Send Slack notifications without running the DBT project** 
 
 in the terminal type "python slack.py" and it will send missing columns in the source table
 
@@ -37,7 +37,7 @@ if you want to check all the tables, you have to configure them separately
 
 =====================================
 2nd Approach. 
-**Send Slack notifications after dbt run **
+!**Send Slack notifications after dbt run **
 
 How this works
 
@@ -56,7 +56,7 @@ While its building the model, this will capture any missing values,
 Then after dbt complete, it shows all the missing values with table name and field. 
 
 =====================================
-what next : How to correct dbt after detecting the missing columns
+!what next : How to correct dbt after detecting the missing columns
 
 message will show you what model to look in the dbt, just add the column to the column_list
 
@@ -66,7 +66,14 @@ And add the fields in the appropriate model
 And re-run the project 
 
 =====================================
-Additional finding :  How build dbt models in python. ( without jinja ) 
+!Additional finding :  How build dbt models in python. ( without jinja ) 
 
 Pls review change_tracking_py 
 to execute dbt run --profiles-dir . --models change_tracking_py
+
+- text in red
++ text in green
+! text in orange
+# text in gray
+@@ text in purple (and bold)@@
+```
