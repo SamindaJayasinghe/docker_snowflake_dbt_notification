@@ -1,5 +1,5 @@
 ```diff
-!**docker build **
++**docker build **
 
 open docker desktop --> download this repo--> open it in vscode --> install docker extension > right click on docker file --> click build image --> click on docker icon --> check under images and right click and "run intractive"
 this will build the docker container --> right click on it --> and click "attach visual studio code" --> this will open a separate window.
@@ -9,7 +9,7 @@ pre requirement :
 docker desktop
 docker extension installed in vs code
 
-**Create a Slack Webhook** ( you need to set up an Incoming Webhook in Slack: ) 
++**Create a Slack Webhook** ( you need to set up an Incoming Webhook in Slack: ) 
 Go to your Slack workspace.
 Navigate to Apps → Manage apps.
 Search for "Incoming Webhooks" and add it to your workspace.
@@ -66,7 +66,7 @@ And add the fields in the appropriate model
 And re-run the project 
 
 =====================================
-!Additional finding :  How build dbt models in python. ( without jinja ) 
++Additional finding :  How build dbt models in python. ( without jinja ) 
 
 Pls review change_tracking_py 
 to execute dbt run --profiles-dir . --models change_tracking_py
