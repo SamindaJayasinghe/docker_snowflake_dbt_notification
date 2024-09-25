@@ -1,70 +1,74 @@
 docker build 
-in docker --> dbt compile --profiles-dir . --no-version-check
+open docker desktop --> download this repo--> open it in vscode --> install docker extension > right click on docker file --> click build image --> click on docker icon --> check under images and right click and "run intractive"
+this will build the docker container --> right click on it --> and click "attach visual studio code" --> this will open a separate window.
+when you open it for the first time you have to click on root, find your project folder, and open inside the docker 
 
-dbt compile --profiles . --no-version-check
-
-dbt deps --profiles . --no-version-check
-
-1. Create a Slack Webhook
-First, you need to set up an Incoming Webhook in Slack:
+pre requirement : 
+docker desktop
+docker extension installed in vs code
+1. Create a Slack Webhook ( you need to set up an Incoming Webhook in Slack: ) 
 
 Go to your Slack workspace.
 Navigate to Apps → Manage apps.
 Search for "Incoming Webhooks" and add it to your workspace.
 Create a webhook and copy the webhook URL that Slack generates for you.
 
- to execute python file --> python slack2.py
+
+======================================================================================================
+1st Approach. Send Slack notifications without running the DBT project 
+===================================================================================================== 
+
+in the terminal type "python slack.py" and it will send missing columns in the source table
+
+description 
+inside Python script it will execute "macros/new_macro" ( check dbt run-operation --new_macro ) 
+in the new_macro --> it reads the source table and compares it with the pre-defined list ( column_list ) 
+and prepare message1 ( containing all missing columns ) and return it
+
+python app will capture the returned message and send it to Slack 
+
+good :
+this is good for identifying columns before running the dbt-project
+bad :
+every table has to be configured on a macro
+if you want to check all the tables, you have to configure them separately
 
 
+======================================================================================================
+2nd Approach. Send Slack notifications after dbt run 
+===================================================================================================== 
+How this works
 
-=========================== This is how this project works 
- 1st approach
-In this will capture the missing fields and save on the terminal memory
-
-Python slack.py will send notifications to the slack
-
-Note : you dont even need to run the dbt project to find out whats missing, 
-If you have configure things on macros/new_macro ,
-It will show you if something is missing.
-
-This approach is good to check a one specific table
+First we create a table to capture missing columns (Note - this table will not grow, meaning every run it will drop and re-create ) 
+	dbt run --profiles-dir . --models slack_notifications
 
 
+Then prepare the scripts to listing the desired columns ( you can build base tables with the same code ) 
+	dbt run --profiles-dir . --models change_tracking_tbl
 
+After the completion of dbt run
+	python slack2.py 
 
-2nd Approach proposal for production use
-
-First run this to create a table inside your schema with data types in it ( check with client if thats ok )
-dbt run --profiles-dir . --models slack_notifications → to build the place holder for notification logs , 
-(Note - this table will not grow, meaning every run it will drop and re-create ) 
-
-
-Second run this to create the source table, any table you want , while its creating, 
-At the same time this will insert any missing fields on the above table 
-dbt run --profiles-dir . --models change_tracking_tbl
-
-Then to get the slack message 
-python slack2.py → this can be run after the entire dbt run complete. 
-
-In this approach , we can configure all the tables in epamaral by defining the tables fields lists, 
-Like in change_tracking_tbl
-And refer them as var in the dbt project for reference tables. 
-
-While its building the model , this will capture any missing values, 
+While its building the model, this will capture any missing values, 
 
 Then after dbt complete, it shows all the missing values with table name and field. 
+
+======================================================================================================
+How to correct dbt after detecting the missing columns
+===================================================================================================== 
+
 After Receiving the message whats the next step to correct 
 —-----------------------------------------------------
-Then ,
-When the developer receive this , he could visit the code in dbt 
+message will show you what model to look in the dbt, just add the column to the column_list
+
 And add the fields in the appropriate model 
 {% set column_list = ['AGE', 'CABIN', 'EMBARKED', 'FARE', 'NAME', 'PARCH', 'SEX', 'SIBSP','SURVIVED', 'PASSENGERID', 'TICKET'] %}
 
 And re-run the project 
 
+======================================================================================================
+Additional finding --> How build dbt models in python. ( without jinja ) 
+===================================================================================================== 
+Pls review change_tracking_py 
 
-Dbt python models → Additional Approach 
-
-This is to show the new python models, 
-
-Pls review change_tracking_py
+to execute dbt run --profiles-dir . --models change_tracking_py
