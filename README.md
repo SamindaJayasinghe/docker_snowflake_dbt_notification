@@ -1,4 +1,5 @@
 **docker build **
+
 open docker desktop --> download this repo--> open it in vscode --> install docker extension > right click on docker file --> click build image --> click on docker icon --> check under images and right click and "run intractive"
 this will build the docker container --> right click on it --> and click "attach visual studio code" --> this will open a separate window.
 when you open it for the first time you have to click on root, find your project folder, and open inside the docker 
@@ -15,8 +16,8 @@ Create a webhook and copy the webhook URL that Slack generates for you.
 
 
 =====================================
-1st Approach. **Send Slack notifications without running the DBT project** 
-
+1st Approach. 
+**Send Slack notifications without running the DBT project** 
 
 in the terminal type "python slack.py" and it will send missing columns in the source table
 
@@ -35,7 +36,8 @@ if you want to check all the tables, you have to configure them separately
 
 
 =====================================
-2nd Approach. **Send Slack notifications after dbt run **
+2nd Approach. 
+**Send Slack notifications after dbt run **
 
 How this works
 
