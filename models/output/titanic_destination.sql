@@ -10,4 +10,4 @@ PASSENGERID as passenger_id,
 SURVIVED as servieved,
 Name as name,
 Age as age
-from {{ ref('titanic') }} 
+from {{ source('uk_sales', 'TITANIC') }} 

@@ -1,4 +1,6 @@
-docker build 
+```diff
++**docker build **
+
 open docker desktop --> download this repo--> open it in vscode --> install docker extension > right click on docker file --> click build image --> click on docker icon --> check under images and right click and "run intractive"
 this will build the docker container --> right click on it --> and click "attach visual studio code" --> this will open a separate window.
 when you open it for the first time you have to click on root, find your project folder, and open inside the docker 
@@ -6,17 +8,22 @@ when you open it for the first time you have to click on root, find your project
 pre requirement : 
 docker desktop
 docker extension installed in vs code
-1. Create a Slack Webhook ( you need to set up an Incoming Webhook in Slack: ) 
 
++**Create a Slack Webhook** ( you need to set up an Incoming Webhook in Slack: ) 
 Go to your Slack workspace.
 Navigate to Apps → Manage apps.
 Search for "Incoming Webhooks" and add it to your workspace.
 Create a webhook and copy the webhook URL that Slack generates for you.
 
 
+<<<<<<< HEAD
 =====================================
 1st Approach. Send Slack notifications without running the DBT project 
 
+=======
+1st Approach. 
+!**Send Slack notifications without running the DBT project** 
+>>>>>>> 512162d1efd8d85973aadc87a0ac8984952204c5
 
 in the terminal type "python slack.py" and it will send missing columns in the source table
 
@@ -35,7 +42,12 @@ if you want to check all the tables, you have to configure them separately
 
 
 =====================================
+<<<<<<< HEAD
 2nd Approach. Send Slack notifications after dbt run 
+=======
+2nd Approach. 
+!**Send Slack notifications after dbt run **
+>>>>>>> 512162d1efd8d85973aadc87a0ac8984952204c5
 
 How this works
 
@@ -53,12 +65,9 @@ While its building the model, this will capture any missing values,
 
 Then after dbt complete, it shows all the missing values with table name and field. 
 
-======================================================================================================
-How to correct dbt after detecting the missing columns
-===================================================================================================== 
+=====================================
+!what next : How to correct dbt after detecting the missing columns
 
-After Receiving the message whats the next step to correct 
-—-----------------------------------------------------
 message will show you what model to look in the dbt, just add the column to the column_list
 
 And add the fields in the appropriate model 
@@ -66,9 +75,43 @@ And add the fields in the appropriate model
 
 And re-run the project 
 
-======================================================================================================
-Additional finding --> How build dbt models in python. ( without jinja ) 
-===================================================================================================== 
-Pls review change_tracking_py 
 
+=====================================
++Additional finding :  How build dbt models in python. ( without jinja ) 
+
+Pls review change_tracking_py 
 to execute dbt run --profiles-dir . --models change_tracking_py
+
+
++Additional finding2 :  soures.yml
+=====================================
+place models/sources/sources.yml
+but when you refering it, eventhoug its sources, do it like this ( source not sources)
+
+{% set source_relation = source('uk_sales', 'TITANIC') %}
+or
+select * from {{ source('usa_marketting', 'ORDERS') }} 
+
++Additional finding3 :  This is how we debug and print
+=====================================
+This is how we debug and print
+add this where you want to see {{ print("sql script: " ~ get_previous_columns) }}
+this is view the debug log dbt run --profiles-dir . --models change_tracking_tbl --debug
+
+- text in red
++ text in green
+! text in orange
+# text in gray
+@@ text in purple (and bold)@@
+```
+---SNOWFLAKE QUERIES TO TEST---------------------
+select * from dbt_output_dbt_output.slack_notifications
+where action_type = 'missing'
+
+  SELECT * from DBT_OUTPUT_DBT_OUTPUT.slack_notifications 
+  where action_type = 'SOURCE' and source_table = 'TEST.PUBLIC.TITANIC';
+
+
+ALTER TABLE PUBLIC.TITANIC
+--ADD COLUMN New3 INT DEFAULT 100;
+drop column New4

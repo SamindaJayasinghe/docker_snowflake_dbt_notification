@@ -48,20 +48,12 @@ def read_slack_notifications():
         conn = get_snowflake_connection()
         cur = conn.cursor()
         
-        query = "SELECT source_table, missing_columns FROM dbt_output_dbt_output.slack_notifications"
+        query = "SELECT source_table, missing_columns FROM dbt_output_dbt_output.slack_notifications where ACTION_TYPE = 'missing'"
         cur.execute(query)
         
         results = cur.fetchall()
         df = pd.DataFrame(results, columns=['source_table', 'missing_columns'])
-
-# ----------------- this part is only to format the message in nice way 
-        header = "source_table | missing_columns"
-        separator = "-" * len(header)
-        
-        rows = [f"{row['source_table']:<12} | {row['missing_columns']}" for _, row in df.iterrows()]
-        formatted_text = f"{header}\n{separator}\n" + "\n".join(rows)
-        return formatted_text
-#-------------------------------------------------
+        return df
     
     except snowflake.connector.errors.ProgrammingError as e:
         print(f"Snowflake error: {e}")
@@ -71,7 +63,7 @@ def read_slack_notifications():
         conn.close()
 
 def send_slack_message(message):
-    webhook_url = "https://hooks.slack.com/services/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"
+    webhook_url = "https://hooks.slack.com/services/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"
     payload = {"text": message}
     response = requests.post(webhook_url, data=json.dumps(payload), headers={'Content-Type': 'application/json'})
     
@@ -79,6 +71,16 @@ def send_slack_message(message):
         raise ValueError(f"Request to Slack returned an error {response.status_code}, the response is:\n{response.text}")
 
 if __name__ == "__main__":
-    msg = read_slack_notifications()
-    slack_msg = 'missing fields found on project sj \n' + msg
-    send_slack_message(slack_msg)
+    msg_df = read_slack_notifications()
+    if msg_df.empty:
+        print('No DATA to send messages')
+    else: # ----------------- sending message only if there are any missing fields
+# ----------------- this part is only to format the message in nice way 
+        header = "source_table | missing_columns"
+        separator = "-" * len(header)
+        
+        rows = [f"{row['source_table']:<12} | {row['missing_columns']}" for _, row in msg_df.iterrows()]
+        formatted_text = f"{header}\n{separator}\n" + "\n".join(rows)
+#-------------------------------------------------
+        slack_msg = 'missing fields found on project sj \n' + formatted_text
+        send_slack_message(slack_msg)

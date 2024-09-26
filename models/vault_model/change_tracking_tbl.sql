@@ -1,4 +1,5 @@
-{% set source_relation = var('source.TITANIC') %}
+
+{% set source_relation = source('uk_sales', 'TITANIC') %}
   
 {% set column_list = ['AGE', 'CABIN', 'EMBARKED', 'FARE', 'NAME', 'PARCH', 'PASSENGERID', 'PCLASS', 'SEX', 'SIBSP','SURVIVED'] %}
 
@@ -9,4 +10,3 @@
 select
   {{ column_name }}
 from {{ source_relation }}
-
