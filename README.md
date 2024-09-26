@@ -14,9 +14,9 @@ Search for "Incoming Webhooks" and add it to your workspace.
 Create a webhook and copy the webhook URL that Slack generates for you.
 
 
-======================================================================================================
+=====================================
 1st Approach. Send Slack notifications without running the DBT project 
-===================================================================================================== 
+
 
 in the terminal type "python slack.py" and it will send missing columns in the source table
 
@@ -34,9 +34,9 @@ every table has to be configured on a macro
 if you want to check all the tables, you have to configure them separately
 
 
-======================================================================================================
+=====================================
 2nd Approach. Send Slack notifications after dbt run 
-===================================================================================================== 
+
 How this works
 
 First we create a table to capture missing columns (Note - this table will not grow, meaning every run it will drop and re-create ) 
