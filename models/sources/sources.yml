@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: uk_sales
+    database: TEST               # Specify the database where the source tables exist
+    schema: PUBLIC                # Specify the schema within that database
+    tables:
+      - name: TITANIC             # The actual table name in the source
+        description: "this is titanic table"
+  - name: usa_marketting
+    database: SNOWFLAKE_SAMPLE_DATA               # Specify the database where the source tables exist
+    schema: TPCH_SF1                # Specify the schema within that database
+    tables:
+      - name: CUSTOMER             # The actual table name in the source
+        description: "this is snowflake sample dataset"
+      - name: ORDERS
+        description: "this is snowflake sample dataset"
+      - name: SUPPLIERS             # The actual table name in the source
+        description: "this is snowflake sample dataset"

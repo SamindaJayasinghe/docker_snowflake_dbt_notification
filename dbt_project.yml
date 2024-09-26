@@ -34,23 +34,18 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   snow1:
       # Applies to all files under models/example/
-      example:
-          materialized: view
+      notifications:
+          materialized: table
           +schema: "dbt_output"
       output:
           materialized: table
           +schema: "dbt_output"  
-      source:
+      sources:
           materialized: ephemeral
-          +schema: "public"  
+          +schema: "dbt_output"  
       vault_model:
           materialized: table
           +schema: "dbt_output" 
 
 vars:
   "source.TITANIC": "PUBLIC.TITANIC"
-
-# This is for the slack notifications
-packages:
-  - package: dbt-slack
-    version: latest
