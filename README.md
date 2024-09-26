@@ -75,13 +75,11 @@ And add the fields in the appropriate model
 
 And re-run the project 
 
-
 =====================================
 +Additional finding :  How build dbt models in python. ( without jinja ) 
 
 Pls review change_tracking_py 
 to execute dbt run --profiles-dir . --models change_tracking_py
-
 
 +Additional finding2 :  soures.yml
 =====================================
@@ -91,19 +89,16 @@ but when you refering it, eventhoug its sources, do it like this ( source not so
 {% set source_relation = source('uk_sales', 'TITANIC') %}
 or
 select * from {{ source('usa_marketting', 'ORDERS') }} 
-
-+Additional finding3 :  This is how we debug and print
-=====================================
-This is how we debug and print
-add this where you want to see {{ print("sql script: " ~ get_previous_columns) }}
-this is view the debug log dbt run --profiles-dir . --models change_tracking_tbl --debug
+or in dbt-python models
+orders_df = dbt.source('uk_sales', 'TITANIC')
 
 - text in red
 + text in green
 ! text in orange
 # text in gray
 @@ text in purple (and bold)@@
-```
+
+
 ---SNOWFLAKE QUERIES TO TEST---------------------
 select * from dbt_output_dbt_output.slack_notifications
 where action_type = 'missing'
